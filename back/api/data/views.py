@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 import pandas as pd
+import numpy as np
 import json
 from django.views.decorators.csrf import csrf_protect
 
@@ -30,19 +31,43 @@ def testeGrafico(request):
 @csrf_protect
 # Retorna correlação entre duas disciplinas informadas
 def correlacao(request):
-    teste = int(request.GET.get('username'))
-    print(teste)
+    discA = request.GET.get('discA')
+    discB = request.GET.get('discB')
 
-    dataFrame = pd.read_csv('data_science/df_disciplinas2015.csv')
-
-    discA = 'CÁLCULO I'
-    discB = 'CÁLCULO II'
+    dataFrame = pd.read_csv('data_science/df_disciplinas2015New.csv')
 
     dataFrameA = dataFrame[dataFrame['nome'] == discA]
     dataFrameB = dataFrame[dataFrame['nome'] == discB]
 
-    series_discentes = dataFrame.discente.unique()
+    # filtrando apenas alunos que pagaram ambas as disciplinas
+    # series_discentesA = dataFrameA.discente.unique()
+    # series_discentesB = dataFrameB.discente.unique()
+    #
+    # dataFrameA = dataFrameA[dataFrameA['discente'].isin(series_discentesA)]
+    # dataFrameB = dataFrameB[dataFrameB['discente'].isin(series_discentesB)]
 
-    # pegar nota de c1 mais antiga e a mais nova de c2
+    # Aprovados no DiscA
+    dataFrameA = dataFrameA[dataFrameA['descricao'].str.contains('APROVADO')]
 
-    return JsonResponse({'results':'ok'})
+    series_aprovados = dataFrameA.discente.unique()
+
+    df_finalB = pd.DataFrame()
+
+    for dis in series_aprovados:
+        linhas = dataFrameB[dataFrameB['discente'] == dis]
+        linha = linhas[linhas['periodoano'] == linhas.periodoano.min()]
+
+        df_finalB = pd.concat([df_finalB, linha])
+
+        # concatenando das tabelas
+        colunas = ['discente', 'media_final', 'nome']
+        dataFrameA = dataFrameA[colunas]
+        df_finalB = df_finalB[colunas]
+
+    conc = pd.concat([dataFrameA, df_finalB])
+
+    df = pd.crosstab(conc.discente, conc.nome, conc.media_final, aggfunc=np.mean)
+    df = df.dropna()
+    df_correlacao = df.corr()
+
+    return JsonResponse({'results': df_correlacao[discA][discB] })
