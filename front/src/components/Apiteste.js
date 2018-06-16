@@ -17,7 +17,7 @@ class Data extends Component {
             }).then(data => {
             console.log(data);
             var cont = 0;
-            var pos = []
+            var pos = [];
             let notas = data.results.map((pic)=>{
                 cont +=1;
                 pos.push(cont);
