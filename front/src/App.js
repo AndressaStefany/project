@@ -3,6 +3,7 @@ import Plot from 'react-plotly.js'
 import logo from './logo.svg'
 import './App.css'
 import Plot_heatmap from './components/Plot_heatmap'
+import Plot_parcoords from "./components/Plot_parcoords";
 
 class App extends Component {
     render() {
@@ -15,7 +16,7 @@ class App extends Component {
                 <p className="App-intro">
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
-                <Plot_heatmap/>
+                <Plot_parcoords/>
 
             </div>
         )
