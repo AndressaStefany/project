@@ -14,14 +14,12 @@ class Plot_parcoords extends Component {
     }
 
     componentDidMount(){
-        fetch('http://127.0.0.1:8000/api/discente/')
+        fetch('http://127.0.0.1:8000/api/parCoord/?lista=CÁLCULO I,CÁLCULO II,CÁLCULO III')
             .then(results => {
                 return results.json();
             }).then(data => {
-            console.log(data);
-
-            // this.setState({
-            // });
+            this.setState({dimensao: data['dimensions']});
+            console.log(this.state.dimensao);
         })
     }
 
@@ -32,28 +30,36 @@ class Plot_parcoords extends Component {
             <div>
                 <Plot data={[
                     {type: 'parcoords',
-                        line: {
-                            color: 'blue'
-                        },
-                        dimensions: [{
-                            range: this.state.range,
-                            // constraintrange: [3, 6],
-                            label: this.state.eixos[0],
-                            values: this.state.valor[0]
-                        }, {
-                            range: this.state.range,
-                            label: this.state.eixos[1],
-                            values: this.state.valor[1],
-                            // tickvals: [1.5,3,4.5]
-                        }, {
-                            range: this.state.range,
-                            label: this.state.eixos[2],
-                            values: this.state.valor[2],
-                        }, {
-                            range: this.state.range,
-                            label: 'D',
-                            values: [4,2,5]
-                        }],
+                        line: {color: 'blue'},
+                        dimensions: [
+                            // this.state.dimensao.forEach(function(content){
+                                // var string = '{';
+                                //     string += 'range: '+content+','
+                                //     label
+                            //     console.log(content);
+                            //     }
+                            // ),
+                            {
+                                range: this.state.dimensao['range'],
+                                // constraintrange: [3, 6],
+                                label: this.state.eixos[0],
+                                values: this.state.valor[0]
+                            },
+                                {
+                                range: this.state.range,
+                                label: this.state.eixos[1],
+                                values: this.state.valor[1],
+                                // tickvals: [1.5,3,4.5]
+                            }, {
+                                range: this.state.range,
+                                label: this.state.eixos[2],
+                                values: this.state.valor[2],
+                            }, {
+                                range: this.state.range,
+                                label: 'D',
+                                values: [4,2,5]
+                            }
+                        ],
                     },
                 ]}
                       layout={ {width: 800, height: 540, title: 'Coordenadas Paralelas'} }
