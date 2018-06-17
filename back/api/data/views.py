@@ -80,6 +80,60 @@ def correlacao(request):
                 correlacoes[i][j] = simpleCorrelacao(lista_disciplinas[i], lista_disciplinas[j])
 
     df_retorno = pd.DataFrame(correlacoes, columns=lista_disciplinas)
-    df_retorno = df_retorno.set_axis(lista_disciplinas, axis=0, inplace=False)
+    # df_retorno = df_retorno.set_axis(lista_disciplinas, axis=0, inplace=False)
 
     return JsonResponse({'results':dataFrameToJson(df_retorno)})
+
+# Retorna
+@csrf_protect
+def coordenadasParalelas(request):
+    args = request.GET.get('lista')
+    lista_disciplinas = args.split(',')
+
+    dataFrame = pd.read_csv('data_science/turmas_new.csv')
+
+    # Contando reprovações de media_final notnull
+    df_contagemRep = dataFrame[dataFrame['descricao'].str.contains('REPROVADO')]
+    df_contagemRep = df_contagemRep[df_contagemRep.media_final.notnull()]
+
+    colunas_1 = ['descricao', 'discente', 'media_final', 'id_turma', 'nome']
+    df_contagemRep = df_contagemRep[colunas_1].drop_duplicates()
+    df_contagemRep = df_contagemRep[df_contagemRep['nome'].isin(lista_disciplinas)]
+    df_contagemRep = df_contagemRep.groupby(['discente']).descricao.count().reset_index()
+
+    # Aprovados e não foram reprovados
+    series_Rep = df_contagemRep['discente']
+    df_NRep = dataFrame[dataFrame['descricao'].str.contains('APROVADO')]
+
+    # tirando os reprovados
+    df_NRep = df_NRep[~df_NRep['discente'].isin(series_Rep)]
+    df_NRep = df_NRep[df_NRep.media_final.notnull()]
+
+    colunas_2 = ['descricao', 'discente', 'media_final', 'id_turma', 'nome']
+    df_NRep = df_NRep[colunas_2].drop_duplicates()
+    df_NRep = df_NRep[df_NRep['nome'].isin(lista_disciplinas)]
+
+    # junta APROVADOS e REPROVADOS
+    aprovados = pd.DataFrame()
+    aprovados['discente'] = df_NRep['discente']
+    aprovados['descricao'] = df_NRep['descricao']
+
+    aprovados = aprovados.replace('APROVADO', 0)
+    aprovados = aprovados.replace('APROVADO POR NOTA', 0)
+
+    df_contagem = pd.concat([df_contagemRep, aprovados])
+    colunas = ['discente', 'nome', 'media_final']
+
+    # tirando duplicados e NaN
+    grafico = dataFrame[colunas].drop_duplicates().dropna()
+    grafico = grafico[grafico['nome'].isin(lista_disciplinas)]
+    df_grafico = pd.crosstab(grafico.discente, grafico.nome, grafico.media_final, aggfunc=np.max).reset_index()
+    df_grafico = pd.merge(df_grafico, df_contagem, on='discente', how='left')
+    df_grafico = df_grafico.fillna(0)
+
+    valor = []
+    for disc in lista_disciplinas:
+        lista = np.array(df_grafico[disc].head()).tolist()
+        valor.append(lista)
+
+    return JsonResponse({'dimensions':{'range':[0,10], 'label':lista_disciplinas, 'valor':valor}})
