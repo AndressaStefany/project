@@ -20,6 +20,7 @@ def teste(request):
 
 @csrf_protect
 def testeGrafico(request):
+    print(os.getcwd())
     dataFrame = pd.read_csv('data_science/matriculas_new/matricula-componente-20172.csv',sep=';')
     dataFrame = dataFrame.dropna()
     dataFrame = dataFrame[dataFrame['nota']>0]
@@ -131,9 +132,16 @@ def coordenadasParalelas(request):
     df_grafico = pd.merge(df_grafico, df_contagem, on='discente', how='left')
     df_grafico = df_grafico.fillna(0)
 
-    valor = []
+    retorno = []
+    blocos = {}
+
     for disc in lista_disciplinas:
         lista = np.array(df_grafico[disc].head()).tolist()
-        valor.append(lista)
 
-    return JsonResponse({'dimensions':{'range':[0,10], 'label':lista_disciplinas, 'valor':valor}})
+        blocos['range'] = [0,10]
+        blocos['label'] = disc
+        blocos['valor'] = lista
+        retorno.append(blocos)
+
+    # return JsonResponse({'dimensions':{'range':[0,10], 'label':lista_disciplinas, 'valor':valor}})
+    return JsonResponse({'dimensions': retorno})
