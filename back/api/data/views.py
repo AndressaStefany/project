@@ -5,6 +5,10 @@ import json
 from django.views.decorators.csrf import csrf_protect
 import os # os.getcwd()
 
+df_todasTurmas = pd.read_csv('data_science/turmas-2010-2017-ok.csv')
+df_comPreRequisitos = pd.read_csv('data_science/disciplinas_prerequisitos.csv')
+df_turmas2015 = pd.read_csv('data_science/turmas_new.csv')
+
 def dataFrameToJson(dataFrame):
     dataFrame = dataFrame.to_json(orient='records')
     dataFrame = json.loads(dataFrame)
@@ -12,9 +16,9 @@ def dataFrameToJson(dataFrame):
     return dataFrame
 
 @csrf_protect
-def teste(request):
+def testeServico(request):
     limit = int(request.GET.get('limit'))
-    dataFrame = pd.read_csv('data_science/turmas-2010-2017-ok.csv').head(limit)
+    dataFrame = df_todasTurmas.head(limit)
 
     return JsonResponse(dataFrameToJson(dataFrame),safe=False)
 
@@ -31,7 +35,7 @@ def testeGrafico(request):
 
 # Retorna (int) correlação entre duas disciplinas informadas
 def simpleCorrelacao(discA,discB):
-    dataFrame = pd.read_csv('data_science/turmas_new.csv')
+    dataFrame = df_turmas2015
     dataFrameA = dataFrame[dataFrame['nome'] == discA]
     dataFrameB = dataFrame[dataFrame['nome'] == discB]
 
@@ -60,6 +64,14 @@ def simpleCorrelacao(discA,discB):
     # return JsonResponse({'results': df_correlacao[discA][discB] })
     return df_correlacao[discA][discB]
 
+# Retorna as disciplinas e seus respectivos pre-requisito informando o periodo
+@csrf_protect
+def disciplinasPeriodo(request):
+    periodo = int(request.GET.get('periodo'))
+
+    df_retorno = df_comPreRequisitos[df_comPreRequisitos['periodo']==periodo]
+
+    return JsonResponse({'results':dataFrameToJson(df_retorno)})
 
 # Calcula a correlação de uma lista de disciplinas
 @csrf_protect
@@ -91,7 +103,7 @@ def coordenadasParalelas(request):
     args = request.GET.get('lista')
     lista_disciplinas = args.split(',')
 
-    dataFrame = pd.read_csv('data_science/turmas_new.csv')
+    dataFrame = df_turmas2015
 
     # Contando reprovações de media_final notnull
     df_contagemRep = dataFrame[dataFrame['descricao'].str.contains('REPROVADO')]
