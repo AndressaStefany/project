@@ -1,5 +1,9 @@
 .App {
-  text-align: center;
+  text-align: left;
+}
+
+.App-content {
+  margin-left: 2%;
 }
 
 .App-logo {
@@ -8,18 +12,27 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
+  background-color: rgba(251, 48, 82, 1);
+  height: 30px;
   padding: 20px;
   color: white;
 }
 
 .App-title {
   font-size: 1.5em;
+  margin-left: 5%;
 }
 
 .App-intro {
   font-size: large;
+}
+
+.App-center {
+  text-align: center;
+}
+
+.App-gray-button {
+  color: gray;
 }
 
 @keyframes App-logo-spin {
