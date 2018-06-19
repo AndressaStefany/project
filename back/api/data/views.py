@@ -87,6 +87,24 @@ def desvioPadrao(request):
 
     return JsonResponse({'Desvio padrão': desvio})
 
+# Retorna a média da disciplina
+@csrf_protect
+def media(request):
+    disciplina = request.GET.get('disciplina')
+    data = df_turmas2015[df_turmas2015['nome'] == disciplina].media_final
+
+    media = data.mean()
+
+    return JsonResponse({'Media': media})
+
+# Retorna as notas da disciplima
+@csrf_protect
+def notas(request):
+    disciplina = request.GET.get('disciplina')
+    notas = df_turmas2015[df_turmas2015['nome'] == disciplina].media_final
+
+    return JsonResponse({'Notas': dataFrameToJson(notas)})
+
 # Calcula a correlação de uma lista de disciplinas
 @csrf_protect
 def correlacao(request):
