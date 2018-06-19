@@ -8,6 +8,7 @@ urlpatterns = [
     path('desviopadrao/', desvioPadrao),
     path('media/', media),
     path('notas/', notas),
+    path('notasfiltro/', notasFiltro),
     path('correlacao/', correlacao),
     path('parCoord/', coordenadasParalelas)
 ]

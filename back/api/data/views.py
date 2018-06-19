@@ -105,6 +105,16 @@ def notas(request):
 
     return JsonResponse({'Notas': dataFrameToJson(notas)})
 
+# Retorna as notas da disciplima
+@csrf_protect
+def notasFiltro(request):
+    disciplina = request.GET.get('disciplina')
+    filtro = int(request.GET.get('filtro'))
+    notas = df_turmas2015[df_turmas2015['nome'] == disciplina].media_final
+    notas = notas[notas>= filtro]
+
+    return JsonResponse({'Notas': dataFrameToJson(notas)})
+
 # Calcula a correlação de uma lista de disciplinas
 @csrf_protect
 def correlacao(request):
