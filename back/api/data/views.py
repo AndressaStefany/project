@@ -24,7 +24,6 @@ def testeServico(request):
 
 @csrf_protect
 def testeGrafico(request):
-    print(os.getcwd())
     dataFrame = pd.read_csv('data_science/matriculas_new/matricula-componente-20172.csv',sep=';')
     dataFrame = dataFrame.dropna()
     dataFrame = dataFrame[dataFrame['nota']>0]
@@ -32,37 +31,6 @@ def testeGrafico(request):
     dataFrame = dataFrame[colunas].head(10)
 
     return JsonResponse({'results':dataFrameToJson(dataFrame)})
-
-# Retorna (int) correlação entre duas disciplinas informadas
-def simpleCorrelacao(discA,discB):
-    dataFrame = df_turmas2015
-    dataFrameA = dataFrame[dataFrame['nome'] == discA]
-    dataFrameB = dataFrame[dataFrame['nome'] == discB]
-
-    # Aprovados no DiscA
-    dataFrameA = dataFrameA[dataFrameA['descricao'].str.contains('APROVADO')]
-    series_aprovados = dataFrameA.discente.unique()
-
-    df_finalB = pd.DataFrame()
-
-    for dis in series_aprovados:
-        linhas = dataFrameB[dataFrameB['discente'] == dis]
-        linha = linhas[linhas['periodoano'] == linhas.periodoano.min()]
-
-        df_finalB = pd.concat([df_finalB, linha])
-
-    colunas = ['discente', 'media_final', 'nome']
-    dataFrameA = dataFrameA[colunas]
-    df_finalB = df_finalB[colunas]
-
-    conc = pd.concat([dataFrameA, df_finalB])
-
-    df = pd.crosstab(conc.discente, conc.nome, conc.media_final, aggfunc=np.mean)
-    df = df.dropna()
-    df_correlacao = df.corr()
-
-    # return JsonResponse({'results': df_correlacao[discA][discB] })
-    return df_correlacao[discA][discB]
 
 # Retorna as disciplinas e seus respectivos pre-requisito informando o periodo
 @csrf_protect
@@ -114,6 +82,33 @@ def notasFiltro(request):
     notas = notas[notas>= filtro]
 
     return JsonResponse({'Notas': dataFrameToJson(notas)})
+
+# Retorna (int) correlação entre duas disciplinas informadas
+def simpleCorrelacao(discA,discB):
+    dataFrame = df_turmas2015
+    dataFrameA = dataFrame[dataFrame['nome'] == discA]
+    dataFrameB = dataFrame[dataFrame['nome'] == discB]
+
+    # Aprovados no DiscA
+    dataFrameA = dataFrameA[dataFrameA['descricao'].str.contains('APROVADO')]
+    series_aprovados = dataFrameA.discente.unique()
+
+    df_finalB = dataFrameB[dataFrameB.discente.isin(series_aprovados)]
+    df_finalB = df_finalB.groupby('discente').periodoano.min().reset_index()
+    df_finalB = pd.merge(df_finalB, dataFrameB, on=["discente","periodoano"])
+
+    colunas = ['discente', 'media_final', 'nome']
+    dataFrameA = dataFrameA[colunas]
+    df_finalB = df_finalB[colunas]
+
+    conc = pd.concat([dataFrameA, df_finalB])
+
+    df = pd.crosstab(conc.discente, conc.nome, conc.media_final, aggfunc=np.mean)
+    df = df.dropna()
+    df_correlacao = df.corr()
+
+    # return JsonResponse({'results': df_correlacao[discA][discB] })
+    return df_correlacao[discA][discB]
 
 # Calcula a correlação de uma lista de disciplinas
 @csrf_protect
