@@ -13,13 +13,39 @@ class OutlinedButtons extends Component {
         this.state = {
             title:props.name,
             id:props.id,
-            preId:props.preid
+            preid:props.preid,
+            active: false,
+            estilo: ''
         };
+        this.handleClick = this.handleClick.bind(this);
     }
+
+    handleClick(){
+        if(this.state.estilo=='') { // selecionado
+            this.setState({
+                estilo: 'Button-materias-select'
+            });
+        } else {
+            this.setState({ // não selecionado
+                estilo: ''
+            });
+        }
+    }
+
+    handleMouseEnter(){
+        // mostrar os pre requisitos
+    }
+
     render(){
         return (
             <div>
-                <Button variant="outlined" color="secondary" style={styles.padding}>
+                <Button id={this.state.id}
+                        className={this.state.estilo}
+                        variant="outlined"
+                        color="secondary"
+                        onClick={this.handleClick}
+                        onMouseEnter={this.handleMouseEnter}
+                        style={styles.padding}>
                     {this.state.title}
                 </Button>
             </div>

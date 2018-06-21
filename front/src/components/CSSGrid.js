@@ -44,7 +44,7 @@ class CSSGrid extends Component{
             }).then(data => {
             data.results.map((array) => {
                 var newArray = this.state.periodo2;
-                newArray.push([array['codigo'], array['nome'], array['pre_requisito']]);
+                    newArray.push([array['codigo'], array['nome'], array['pre_requisito']]);
                 this.setState({
                     periodo2: newArray
                 });
