@@ -9,7 +9,10 @@ class Plot_parcoords extends Component {
             eixos: ['CÁLCULO I', 'CÁLCULO II', 'CÁLCULO III'],
             valor: [[3, 5, 3], [8,6,10], [3.5, 10, 8.9]],
             // range, constraintrange, label, values
-            dimensao: []
+            dimensao: [],
+            variavel: [],
+            data: [],
+            layout: {width: 800, height: 540, title: 'Coordenadas Paralelas'}
         }
     }
 
@@ -18,8 +21,18 @@ class Plot_parcoords extends Component {
             .then(results => {
                 return results.json();
             }).then(data => {
-            this.setState({dimensao: data['dimensions']});
-            console.log(this.state.dimensao);
+            data['dimensions'].map((content) => {
+                var string = '{"range": [0,10], "label": ["'+content["label"]+'"],"values": ['+content['valor']+']}';
+                var aux = this.state.data;
+                aux.push(JSON.parse(string));
+                this.setState({
+                    data: aux,
+                });
+            });
+
+            this.setState({
+                dimensao: data['dimensions'],
+            });
         })
     }
 
@@ -28,34 +41,8 @@ class Plot_parcoords extends Component {
     render(){
         return(
             <div>
-                <Plot data={[
-                    {type: 'parcoords',
-                        line: {color: 'blue'},
-                        dimensions: [ this.state.dimensao
-                            //{
-                            //    range: this.state.dimensao['range'],
-                                // constraintrange: [3, 6],
-                            //    label: this.state.eixos[0],
-                            //    values: this.state.valor[0]
-                            //},
-                            //    {
-                            //    range: this.state.range,
-                            //    label: this.state.eixos[1],
-                            //    values: this.state.valor[1],
-                            //    // tickvals: [1.5,3,4.5]
-                            //}, {
-                            //    range: this.state.range,
-                            //    label: this.state.eixos[2],
-                            //    values: this.state.valor[2],
-                            //}, {
-                            //    range: this.state.range,
-                            //    label: 'D',
-                            //    values: [4,2,5]
-                            //}
-                        ],
-                    },
-                ]}
-                      layout={ {width: 800, height: 540, title: 'Coordenadas Paralelas'} }
+                <Plot data={[this.state.dimensao]}
+                      layout={this.state.layout}
                 />
             </div>
         )

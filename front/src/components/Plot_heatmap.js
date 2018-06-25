@@ -2,16 +2,24 @@ import React, {Component} from 'react'
 import Plot from 'react-plotly.js'
 
 class Plot_heatmap extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
-            disciplinas: ['CÁLCULO I', 'CÁLCULO II', 'CÁLCULO III'],
+            disciplinas: props.disciplinas,
             valor: []
         }
     }
 
     componentDidMount(){
-        fetch('http://127.0.0.1:8000/api/correlacao/?lista=CÁLCULO I,CÁLCULO II,CÁLCULO III')
+        var lista = '';
+        (this.state.disciplinas).map((disc) => {
+            lista +=','+disc;
+        });
+        lista = lista.substr(1,lista.length);
+
+        console.log('lista '+lista);
+
+        fetch('http://127.0.0.1:8000/api/correlacao/?lista='+lista)
             .then(results => {
                 return results.json();
             }).then(data => {

@@ -11,13 +11,13 @@ class OutlinedButtons extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title:props.name,
-            id:props.id,
-            preid:props.preid,
-            active: false,
+            id:props.codigo,
+            nome:props.disciplina,
+            preid:props.prerequisito,
             estilo: ''
         };
         this.handleClick = this.handleClick.bind(this);
+        this.onMouseEnter = this.onMouseEnter.bind(this);
     }
 
     handleClick(){
@@ -25,28 +25,29 @@ class OutlinedButtons extends Component {
             this.setState({
                 estilo: 'Button-materias-select'
             });
-        } else {
-            this.setState({ // não selecionado
-                estilo: ''
-            });
+            this.props.changeCorrelacao(this.state.nome);
         }
     }
 
-    handleMouseEnter(){
-        // mostrar os pre requisitos
+    onMouseEnter() {
+        var array = (this.state.preid).split(',');
+        array.map((prerequisito) => {
+            //console.log(prerequisito);
+        })
     }
 
     render(){
         return (
             <div>
-                <Button id={this.state.id}
+                <Button id={this.state.teste}
+                        name={this.state.nome}
                         className={this.state.estilo}
                         variant="outlined"
                         color="secondary"
                         onClick={this.handleClick}
-                        onMouseEnter={this.handleMouseEnter}
+                        onMouseEnter={this.onMouseEnter}
                         style={styles.padding}>
-                    {this.state.title}
+                    {this.state.nome}
                 </Button>
             </div>
         );

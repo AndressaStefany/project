@@ -4,11 +4,15 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^1.2.2",
+    "@material-ui/icons": "^1.1.0",
+    "material-ui": "^0.20.1",
     "plotly.js": "^1.38.2",
     "react": "^16.4.0",
     "react-csv-reader": "^0.3.0",
     "react-dom": "^16.4.0",
     "react-plotly.js": "^2.2.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "typeface-roboto": "0.0.54"
   },

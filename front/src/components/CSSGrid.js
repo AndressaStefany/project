@@ -3,6 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import OutlinedButtons from './OutlinedButtons';
+import Plot_heatmap from "./Plot_heatmap";
+import Button from '@material-ui/core/Button';
 
 const styles = {
     paper64: {
@@ -21,8 +23,10 @@ class CSSGrid extends Component{
             periodo1: [],
             periodo2: [],
             periodo3: [],
-            periodo4: []
-        }
+            periodo4: [],
+            correlacao: [],
+            plotCorrelacao: false
+        };
     }
 
     componentDidMount(){
@@ -76,6 +80,28 @@ class CSSGrid extends Component{
         });
     }
 
+    // Função chamada pelo callbackParent();
+    onChangeCorrelacao(dataFromChild){
+        var aux = this.state.correlacao;
+        aux.push(dataFromChild);
+        this.setState({ correlacao: aux});
+
+        console.log(this.state.correlacao);
+    };
+
+    changePlotCorrelacao(){
+        this.setState({
+            plotCorrelacao:true,
+        });
+    }
+
+    cancela(){ // cancela as operações
+        this.setState({
+            correlacao: [],
+            plotCorrelacao: false
+        });
+    }
+
     render(){
         return (
             <div>
@@ -88,7 +114,12 @@ class CSSGrid extends Component{
                         <Paper style={styles.paper64}>
                             <p className="App-center">1º período</p>
                             {this.state.periodo1.map((linha)=>
-                                <OutlinedButtons id={linha[0]} name={linha[1]} preid={linha[3]}/>
+                                <OutlinedButtons
+                                    changeCorrelacao={this.onChangeCorrelacao.bind(this)}
+                                    codigo={linha[0]}
+                                    disciplina={linha[1]}
+                                    prerequisito={linha[2]}
+                                />
                             )}
                         </Paper>
                     </Grid>
@@ -96,7 +127,12 @@ class CSSGrid extends Component{
                         <Paper style={styles.paper64}>
                             <p className="App-center">2º período</p>
                             {this.state.periodo2.map((linha)=>
-                                <OutlinedButtons id={linha[0]} name={linha[1]} preid={linha[3]}/>
+                                <OutlinedButtons
+                                    changeCorrelacao={this.onChangeCorrelacao.bind(this)}
+                                    codigo={linha[0]}
+                                    disciplina={linha[1]}
+                                    prerequisito={linha[2]}
+                                />
                             )}
                         </Paper>
                     </Grid>
@@ -104,7 +140,12 @@ class CSSGrid extends Component{
                         <Paper style={styles.paper64}>
                             <p className="App-center">3º período</p>
                             {this.state.periodo3.map((linha)=>
-                                <OutlinedButtons id={linha[0]} name={linha[1]} preid={linha[3]}/>
+                                <OutlinedButtons
+                                    changeCorrelacao={this.onChangeCorrelacao.bind(this)}
+                                    codigo={linha[0]}
+                                    disciplina={linha[1]}
+                                    prerequisito={linha[2]}
+                                />
                             )}
                         </Paper>
                     </Grid>
@@ -112,11 +153,34 @@ class CSSGrid extends Component{
                         <Paper style={styles.paper64}>
                             <p className="App-center">4º período</p>
                             {this.state.periodo4.map((linha)=>
-                                <OutlinedButtons id={linha[0]} name={linha[1]} preid={linha[3]}/>
+                               <OutlinedButtons
+                                   changeCorrelacao={this.onChangeCorrelacao.bind(this)}
+                                   codigo={linha[0]}
+                                   disciplina={linha[1]}
+                                   prerequisito={linha[2]}
+                               />
                             )}
                         </Paper>
                     </Grid>
                 </Grid>
+                <Button
+                    onClick={this.changePlotCorrelacao.bind(this)}
+                    color="default"
+                    variant="flat"
+                >
+                    Correlação
+                </Button>
+
+                <Button
+                    onClick={this.cancela.bind(this)}
+                    color="default"
+                    variant="flat"
+                >
+                    Cancelar
+                </Button>
+
+                {/*Mostra matriz de correlação*/}
+                {this.state.plotCorrelacao && <Plot_heatmap disciplinas={this.state.correlacao}/>}
             </div>
         );
     }
