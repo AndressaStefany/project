@@ -10,5 +10,6 @@ urlpatterns = [
     path('notas/', notas),
     path('notasfiltro/', notasFiltro),
     path('correlacao/', correlacao),
-    path('parCoord/', coordenadasParalelas)
+    path('parCoord/', coordenadasParalelas),
+    path('qntDiscentes/', qntDiscentes)
 ]

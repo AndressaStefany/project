@@ -39,6 +39,9 @@ def disciplinasPeriodo(request):
 
     df_retorno = df_comPreRequisitos[df_comPreRequisitos['periodo']==periodo]
 
+    if(periodo == 0):
+        df_retorno = df_comPreRequisitos['nome']
+
     return JsonResponse({'results':dataFrameToJson(df_retorno)})
 
 # Retorna o desvio padrão da disciplina
@@ -194,3 +197,14 @@ def coordenadasParalelas(request):
 
     # return JsonResponse({'dimensions':{'range':[0,10], 'label':lista_disciplinas, 'valor':valor}})
     return JsonResponse({'dimensions': retorno})
+
+# Retorna ingressantes/desistentes/concluintes
+@csrf_protect
+def qntDiscentes(request):
+    table = request.GET.get('status')
+
+    dataFrame = pd.read_csv('data_science/'+table+'Qnt.csv')
+    colunas = ['anoperiodo', 'quantidade']
+    dataFrame = dataFrame[colunas]
+
+    return JsonResponse({'results': dataFrameToJson(dataFrame)})

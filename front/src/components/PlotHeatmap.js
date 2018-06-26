@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Plot from 'react-plotly.js'
 
-class Plot_heatmap extends Component {
+class PlotHeatmap extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -11,13 +11,7 @@ class Plot_heatmap extends Component {
     }
 
     componentDidMount(){
-        var lista = '';
-        (this.state.disciplinas).map((disc) => {
-            lista +=','+disc;
-        });
-        lista = lista.substr(1,lista.length);
-
-        console.log('lista '+lista);
+        var lista = (this.state.disciplinas).toString();
 
         fetch('http://127.0.0.1:8000/api/correlacao/?lista='+lista)
             .then(results => {
@@ -57,4 +51,4 @@ class Plot_heatmap extends Component {
     }
 }
 
-export default Plot_heatmap;
+export default PlotHeatmap;

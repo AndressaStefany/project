@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import OutlinedButtons from './OutlinedButtons';
-import Plot_heatmap from "./Plot_heatmap";
+import PlotHeatmap from "./PlotHeatmap";
 import Button from '@material-ui/core/Button';
 
 const styles = {
@@ -34,48 +34,48 @@ class CSSGrid extends Component{
             .then(results => {
                 return results.json();
             }).then(data => {
+            var newArray = this.state.periodo1;
             data.results.map((array) => {
-                var newArray = this.state.periodo1;
                 newArray.push([array['codigo'], array['nome'], array['pre_requisito']]);
-                this.setState({
-                    periodo1: newArray
-                });
+            });
+            this.setState({
+                periodo1: newArray
             });
         });
         fetch('http://127.0.0.1:8000/api/disciplinas/?periodo=2')
             .then(results => {
                 return results.json();
             }).then(data => {
+            var newArray = this.state.periodo2;
             data.results.map((array) => {
-                var newArray = this.state.periodo2;
-                    newArray.push([array['codigo'], array['nome'], array['pre_requisito']]);
-                this.setState({
-                    periodo2: newArray
-                });
+                newArray.push([array['codigo'], array['nome'], array['pre_requisito']]);
+            });
+            this.setState({
+                periodo2: newArray
             });
         });
         fetch('http://127.0.0.1:8000/api/disciplinas/?periodo=3')
             .then(results => {
                 return results.json();
             }).then(data => {
+            var newArray = this.state.periodo3;
             data.results.map((array) => {
-                var newArray = this.state.periodo3;
                 newArray.push([array['codigo'], array['nome'], array['pre_requisito']]);
-                this.setState({
-                    periodo3: newArray
-                });
+            });
+            this.setState({
+                periodo3: newArray
             });
         });
         fetch('http://127.0.0.1:8000/api/disciplinas/?periodo=4')
             .then(results => {
                 return results.json();
             }).then(data => {
+            var newArray = this.state.periodo4;
             data.results.map((array) => {
-                var newArray = this.state.periodo4;
                 newArray.push([array['codigo'], array['nome'], array['pre_requisito']]);
-                this.setState({
-                    periodo4: newArray
-                });
+            });
+            this.setState({
+                periodo4: newArray
             });
         });
     }
@@ -85,8 +85,6 @@ class CSSGrid extends Component{
         var aux = this.state.correlacao;
         aux.push(dataFromChild);
         this.setState({ correlacao: aux});
-
-        console.log(this.state.correlacao);
     };
 
     changePlotCorrelacao(){
@@ -106,7 +104,7 @@ class CSSGrid extends Component{
         return (
             <div>
                 <Typography variant="subheading" gutterBottom>
-                    <h1>Bacharelado em Ciências e Tecnologia</h1>
+                    <h2>Bacharelado em Ciências e Tecnologia</h2>
                     <br/>
                 </Typography>
                 <Grid container spacing={24}>
@@ -153,12 +151,12 @@ class CSSGrid extends Component{
                         <Paper style={styles.paper64}>
                             <p className="App-center">4º período</p>
                             {this.state.periodo4.map((linha)=>
-                               <OutlinedButtons
-                                   changeCorrelacao={this.onChangeCorrelacao.bind(this)}
-                                   codigo={linha[0]}
-                                   disciplina={linha[1]}
-                                   prerequisito={linha[2]}
-                               />
+                                <OutlinedButtons
+                                    changeCorrelacao={this.onChangeCorrelacao.bind(this)}
+                                    codigo={linha[0]}
+                                    disciplina={linha[1]}
+                                    prerequisito={linha[2]}
+                                />
                             )}
                         </Paper>
                     </Grid>
@@ -180,7 +178,7 @@ class CSSGrid extends Component{
                 </Button>
 
                 {/*Mostra matriz de correlação*/}
-                {this.state.plotCorrelacao && <Plot_heatmap disciplinas={this.state.correlacao}/>}
+                {this.state.plotCorrelacao && <PlotHeatmap disciplinas={this.state.correlacao}/>}
             </div>
         );
     }

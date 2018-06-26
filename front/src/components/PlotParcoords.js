@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Plot from 'react-plotly.js'
 
-class Plot_parcoords extends Component {
+class PlotParcoords extends Component {
     constructor(){
         super();
         this.state = {
@@ -49,4 +49,4 @@ class Plot_parcoords extends Component {
     }
 }
 
-export default Plot_parcoords;
+export default PlotParcoords;
