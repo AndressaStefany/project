@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
+import PlotViolin from './PlotViolin'
 
 class MediasView extends Component {
-
     render(){
         return(
-            <div>
-                Médias
+            <div className="App-center">
+                <PlotViolin disciplina="PRÉ-CÁLCULO"/>
             </div>
         )
     }
