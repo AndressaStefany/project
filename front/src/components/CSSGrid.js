@@ -13,6 +13,10 @@ const styles = {
         whiteSpace: 'nowrap',
         marginBottom: '8px',
         color: 'rgba(0, 0, 0, 0.54)',
+    },
+    botao: {
+        backgroundColor: '#f50057',
+        color: 'white'
     }
 };
 
@@ -82,9 +86,23 @@ class CSSGrid extends Component{
 
     // Função chamada pelo callbackParent();
     onChangeCorrelacao(dataFromChild){
-        var aux = this.state.correlacao;
-        aux.push(dataFromChild);
+        var aux = [];
+        var tag = true;
+
+        this.state.correlacao.map((content) => {
+            if (dataFromChild === content) {
+                tag = false; // é repetido
+            } else {
+                aux.push(content);
+            }
+        });
+        if(tag)
+            aux.push(dataFromChild);
+
         this.setState({ correlacao: aux});
+
+        console.log(this.state.correlacao);
+        console.log("Depois");
     };
 
     changePlotCorrelacao(){
@@ -101,86 +119,94 @@ class CSSGrid extends Component{
     }
 
     render(){
+        var content = (<Grid container spacing={24}>
+            <Grid item xs={3}>
+                <Paper style={styles.paper64}>
+                    <p className="App-center">1º período</p>
+                    {this.state.periodo1.map((linha)=>
+                        <OutlinedButtons
+                            changeCorrelacao={this.onChangeCorrelacao.bind(this)}
+                            codigo={linha[0]}
+                            disciplina={linha[1]}
+                            prerequisito={linha[2]}
+                        />
+                    )}
+                </Paper>
+            </Grid>
+            <Grid item xs={3}>
+                <Paper style={styles.paper64}>
+                    <p className="App-center">2º período</p>
+                    {this.state.periodo2.map((linha)=>
+                        <OutlinedButtons
+                            changeCorrelacao={this.onChangeCorrelacao.bind(this)}
+                            codigo={linha[0]}
+                            disciplina={linha[1]}
+                            prerequisito={linha[2]}
+                        />
+                    )}
+                </Paper>
+            </Grid>
+            <Grid item xs={3}>
+                <Paper style={styles.paper64}>
+                    <p className="App-center">3º período</p>
+                    {this.state.periodo3.map((linha)=>
+                        <OutlinedButtons
+                            changeCorrelacao={this.onChangeCorrelacao.bind(this)}
+                            codigo={linha[0]}
+                            disciplina={linha[1]}
+                            prerequisito={linha[2]}
+                        />
+                    )}
+                </Paper>
+            </Grid>
+            <Grid item xs={3}>
+                <Paper style={styles.paper64}>
+                    <p className="App-center">4º período</p>
+                    {this.state.periodo4.map((linha)=>
+                        <OutlinedButtons
+                            changeCorrelacao={this.onChangeCorrelacao.bind(this)}
+                            codigo={linha[0]}
+                            disciplina={linha[1]}
+                            prerequisito={linha[2]}
+                        />
+                    )}
+                </Paper>
+            </Grid>
+        </Grid>);
+
+        var buttonCorrelacao = (<Button
+            className="App-right"
+            onClick={this.changePlotCorrelacao.bind(this)}
+            variant="flat"
+            style={styles.botao}
+        >
+            Correlação
+        </Button>);
+
+        var buttonCancelar = <Button
+            onClick={this.cancela.bind(this)}
+            variant="flat"
+            style={styles.botao}
+        >
+            Voltar
+        </Button>;
+
         return (
             <div>
                 <Typography variant="subheading" gutterBottom>
                     <h2>Bacharelado em Ciências e Tecnologia</h2>
                     <br/>
                 </Typography>
-                <Grid container spacing={24}>
-                    <Grid item xs={3}>
-                        <Paper style={styles.paper64}>
-                            <p className="App-center">1º período</p>
-                            {this.state.periodo1.map((linha)=>
-                                <OutlinedButtons
-                                    changeCorrelacao={this.onChangeCorrelacao.bind(this)}
-                                    codigo={linha[0]}
-                                    disciplina={linha[1]}
-                                    prerequisito={linha[2]}
-                                />
-                            )}
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <Paper style={styles.paper64}>
-                            <p className="App-center">2º período</p>
-                            {this.state.periodo2.map((linha)=>
-                                <OutlinedButtons
-                                    changeCorrelacao={this.onChangeCorrelacao.bind(this)}
-                                    codigo={linha[0]}
-                                    disciplina={linha[1]}
-                                    prerequisito={linha[2]}
-                                />
-                            )}
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <Paper style={styles.paper64}>
-                            <p className="App-center">3º período</p>
-                            {this.state.periodo3.map((linha)=>
-                                <OutlinedButtons
-                                    changeCorrelacao={this.onChangeCorrelacao.bind(this)}
-                                    codigo={linha[0]}
-                                    disciplina={linha[1]}
-                                    prerequisito={linha[2]}
-                                />
-                            )}
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <Paper style={styles.paper64}>
-                            <p className="App-center">4º período</p>
-                            {this.state.periodo4.map((linha)=>
-                                <OutlinedButtons
-                                    changeCorrelacao={this.onChangeCorrelacao.bind(this)}
-                                    codigo={linha[0]}
-                                    disciplina={linha[1]}
-                                    prerequisito={linha[2]}
-                                />
-                            )}
-                        </Paper>
-                    </Grid>
-                </Grid>
-                <Button
-                    onClick={this.changePlotCorrelacao.bind(this)}
-                    color="default"
-                    variant="flat"
-                >
-                    Correlação
-                </Button>
+                {!(this.state.plotCorrelacao) && content}
+                {!(this.state.plotCorrelacao) && <div className="App-right"><br/>{buttonCorrelacao}</div>}
 
-                <Button
-                    onClick={this.cancela.bind(this)}
-                    color="default"
-                    variant="flat"
-                >
-                    Cancelar
-                </Button>
-
+                {this.state.plotCorrelacao && buttonCancelar}
                 {/*Mostra matriz de correlação*/}
                 {this.state.plotCorrelacao &&
-                <PlotHeatmap disciplinas={this.state.correlacao}
-                             width={620} height={540} title='Correlação'/>}
+                <div className="App-center">
+                    <PlotHeatmap disciplinas={this.state.correlacao}
+                                 width={620} height={540} title='Correlação'/>
+                </div>}
             </div>
         );
     }

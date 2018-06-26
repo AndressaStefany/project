@@ -26,6 +26,11 @@ class OutlinedButtons extends Component {
                 estilo: 'Button-materias-select'
             });
             this.props.changeCorrelacao(this.state.nome);
+        } else {
+            this.setState({
+                estilo: ''
+            });
+            this.props.changeCorrelacao(this.state.nome);
         }
     }
 

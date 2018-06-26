@@ -10,8 +10,7 @@ class MediasView extends Component {
         super(props);
         this.state = {
             notas: [],
-            disciplina: props.disciplina,
-            discList: ['CÁLCULO I', 'CÁLCULO II', 'CÁLCULO III'],
+            discList: props.discList,
             disciplinasOrdem: []
         };
     }
@@ -37,10 +36,13 @@ class MediasView extends Component {
     }
 
     render(){
+        // let variavel = this.state.discList.map((disciplina) => {});
+
         return(
             <div className="App-center">
                 <Plot
                     data={[
+                        // {variavel}
                         {
                             type: 'violin',
                             y: this.state.notas[0],
