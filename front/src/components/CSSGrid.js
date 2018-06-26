@@ -178,7 +178,9 @@ class CSSGrid extends Component{
                 </Button>
 
                 {/*Mostra matriz de correlação*/}
-                {this.state.plotCorrelacao && <PlotHeatmap disciplinas={this.state.correlacao}/>}
+                {this.state.plotCorrelacao &&
+                <PlotHeatmap disciplinas={this.state.correlacao}
+                             width={620} height={540} title='Correlação'/>}
             </div>
         );
     }

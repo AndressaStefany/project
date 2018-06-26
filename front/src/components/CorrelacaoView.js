@@ -5,28 +5,18 @@ class CorrelacaoView extends Component {
     constructor(){
         super();
         this.state = {
-            correlacao: [],
+            correlacao: ["PRÉ-CÁLCULO", "CÁLCULO I", "QUÍMICA GERAL", "VETORES E GEOMETRIA ANALÍTICA", "CÁLCULO II",
+                "ÁLGEBRA LINEAR", "PROBABILIDADE E ESTATÍSTICA", "INTRODUÇÃO À FÍSICA CLÁSSICA I", "LÓGICA DE PROGRAMAÇÃO",
+                "CÁLCULO III", "INTRODUÇÃO À FÍSICA CLÁSSICA II", "LINGUAGEM DE PROGRAMAÇÃO", "INTRODUÇÃO À FÍSICA CLÁSSICA III",
+                "COMPUTAÇÃO NUMÉRICA", "CIÊNCIA E TECNOLOGIA DOS MATERIAIS", "MECÂNICA DOS FLUIDOS", "MECÂNICA DOS SÓLIDOS"],
         };
-    }
-
-    componentDidMount() {
-        fetch('http://127.0.0.1:8000/api/disciplinas/?periodo=0')
-            .then(results => {
-                return results.json();
-            }).then(data => {
-            var aux = this.state.correlacao;
-            for(var i=0; i<data.results.length; i++){
-                aux.push(data.results[i]);
-            }
-            this.setState({correlacao: aux});
-        });
-
     }
 
     render(){
         return(
             <div className="App-center">
-                <PlotHeatmap disciplinas={this.state.correlacao}/>
+                <PlotHeatmap disciplinas={this.state.correlacao} title="Correlação com Todas as Matérias"
+                            width={720} height={640}/>
             </div>
         )
     }
