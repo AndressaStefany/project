@@ -72,7 +72,14 @@ def media(request):
 @csrf_protect
 def notas(request):
     disciplina = request.GET.get('disciplina')
-    notas = df_turmas2015[df_turmas2015['nome'] == disciplina].media_final
+
+    colunas = ['discente', 'id_turma', 'media_final', 'nome']
+    df = df_turmas2015[colunas].drop_duplicates()
+
+    if(disciplina==""):
+        notas = df[['nome', 'media_final']]
+    else:
+        notas = df[df['nome'] == disciplina].media_final
 
     return JsonResponse({'Notas': dataFrameToJson(notas)})
 
