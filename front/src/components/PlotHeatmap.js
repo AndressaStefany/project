@@ -6,6 +6,7 @@ class PlotHeatmap extends Component {
         super(props);
         this.state = {
             disciplinas: props.disciplinas,
+            abreviaturas: props.abreviaturas,
             valor: [],
             title: props.title,
             width: props.width,
@@ -43,12 +44,20 @@ class PlotHeatmap extends Component {
                 <Plot
                     data={[
                         {type: 'heatmap',
+                            // colorscale: 'YIGnBu',
+                            // autocolorscale: true,
+                            colorscale: 'Reds',
                             // vizualização: ordem das linhas de baixo pra cima,
-                            x: this.state.disciplinas,
-                            y: this.state.disciplinas,
+                            x: this.state.abreviaturas,
+                            y: this.state.abreviaturas,
                             z: this.state.valor}
                     ]}
-                    layout={ {width: 720, height: 640, title: 'Correlação'} }
+                    layout={{
+                        width: 720,
+                        height: 640,
+                        title: 'Correlação',
+                        margin: {t:50, r:110, l: 150,b:170},
+                    }}
                 />
             </div>
         )
