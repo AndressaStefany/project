@@ -5,13 +5,14 @@ function unpack(rows, key) {
     return rows.map(function(row) { return row[key]; });
 }
 
-class MediasView extends Component {
+class PlotViolin extends Component {
     constructor(props){
         super(props);
         this.state = {
             notas: [],
             discList: props.discList,
-            disciplinasOrdem: []
+            disciplinasOrdem: [],
+            title: props.title
         };
     }
 
@@ -61,8 +62,7 @@ class MediasView extends Component {
                                 visible: true
                             },
                             showlegend: false
-                        },
-                        {
+                        },{
                             type: 'violin',
                             y: this.state.notas[1],
                             x0: this.state.disciplinasOrdem[1],
@@ -74,14 +74,13 @@ class MediasView extends Component {
                             line: {
                                 color: 'black'
                             },
-                            fillcolor: 'rgb(102,166,30)',
-                            opacity: 0.6,
+                            fillcolor: 'blue',
+                            opacity: 0.7,
                             meanline: {
                                 visible: true
                             },
                             showlegend: false
-                        },
-                        {
+                        },{
                             type: 'violin',
                             y: this.state.notas[2],
                             x0: this.state.disciplinasOrdem[2],
@@ -99,14 +98,51 @@ class MediasView extends Component {
                                 visible: true
                             },
                             showlegend: false
+                        },{
+                            type: 'violin',
+                            y: this.state.notas[3],
+                            x0: this.state.disciplinasOrdem[3],
+                            points: 'none',
+                            box: {
+                                visible: true
+                            },
+                            boxpoints: false,
+                            line: {
+                                color: 'black'
+                            },
+                            fillcolor: 'green',
+                            opacity: 0.7,
+                            meanline: {
+                                visible: true
+                            },
+                            showlegend: false
+                        },{
+                            type: 'violin',
+                            y: this.state.notas[4],
+                            x0: this.state.disciplinasOrdem[4],
+                            points: 'none',
+                            box: {
+                                visible: true
+                            },
+                            boxpoints: false,
+                            line: {
+                                color: 'black'
+                            },
+                            fillcolor: 'gray',
+                            opacity: 0.7,
+                            meanline: {
+                                visible: true
+                            },
+                            showlegend: false
                         },
                     ]}
                     layout={
                         {
                             width: 820,
                             height: 640,
-                            title: '',
-                            yaxis: {zeroline: false}
+                            title: this.state.title,
+                            yaxis: {zeroline: false},
+                            margin: {t:50, r:110, l: 20,b:130}
                         }
                     }
                 />
@@ -115,4 +151,4 @@ class MediasView extends Component {
     }
 }
 
-export default MediasView;
+export default PlotViolin;
