@@ -7,6 +7,10 @@ const styles = {
     }
 };
 
+function preid(id) {
+    
+}
+
 class OutlinedButtons extends Component {
     constructor(props) {
         super(props);
@@ -35,13 +39,19 @@ class OutlinedButtons extends Component {
     }
 
     onMouseEnter() {
-        var array = (this.state.preid).split(',');
-        array.map((prerequisito) => {
-            //console.log(prerequisito);
-        })
+        // var array = (this.state.preid).split(',');
+        // array.map((prerequisito) => {
+        //     //console.log(prerequisito);
+        // })
+    }
+
+    myFunc() {
+        console.log("Teeeeste");
+        return "Teste";
     }
 
     render(){
+
         return (
             <div>
                 <Button id={this.state.teste}
@@ -51,7 +61,9 @@ class OutlinedButtons extends Component {
                         color="secondary"
                         onClick={this.handleClick}
                         onMouseEnter={this.onMouseEnter}
-                        style={styles.padding}>
+                        style={styles.padding}
+                        title={"Pré-requisitos: "+this.state.preid}
+                >
                     {this.state.nome}
                 </Button>
             </div>

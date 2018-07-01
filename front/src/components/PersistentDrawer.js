@@ -158,7 +158,7 @@ class PersistentDrawer extends React.Component {
                             button
                         >
                             <ListItemIcon>
-                                <InboxIcon />
+                                <SendIcon />
                             </ListItemIcon>
                             <ListItemText primary="Matérias" />
                         </ListItem>
@@ -169,7 +169,7 @@ class PersistentDrawer extends React.Component {
                             button
                         >
                             <ListItemIcon>
-                                <DraftsIcon />
+                                <SendIcon />
                             </ListItemIcon>
                             <ListItemText primary="Médias" />
                         </ListItem>
@@ -180,7 +180,7 @@ class PersistentDrawer extends React.Component {
                             button
                         >
                             <ListItemIcon>
-                                <StarIcon />
+                                <SendIcon />
                             </ListItemIcon>
                             <ListItemText primary="Ingresso Vs Evasão" />
                         </ListItem>
@@ -216,7 +216,7 @@ class PersistentDrawer extends React.Component {
                             button
                         >
                             <ListItemIcon>
-                                <DeleteIcon />
+                                <StarIcon />
                             </ListItemIcon>
                             <ListItemText primary="Quem somos" />
                         </ListItem>

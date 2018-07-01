@@ -40,7 +40,7 @@ class CSSGrid extends Component{
             }).then(data => {
             var newArray = this.state.periodo1;
             data.results.map((array) => {
-                newArray.push([array['codigo'], array['nome'], array['pre_requisito']]);
+                newArray.push([array['codigo'], array['nome'], array['pre_requisito'], array['nome_prereq']]);
             });
             this.setState({
                 periodo1: newArray
@@ -52,7 +52,7 @@ class CSSGrid extends Component{
             }).then(data => {
             var newArray = this.state.periodo2;
             data.results.map((array) => {
-                newArray.push([array['codigo'], array['nome'], array['pre_requisito']]);
+                newArray.push([array['codigo'], array['nome'], array['pre_requisito'], array['nome_prereq']]);
             });
             this.setState({
                 periodo2: newArray
@@ -64,7 +64,7 @@ class CSSGrid extends Component{
             }).then(data => {
             var newArray = this.state.periodo3;
             data.results.map((array) => {
-                newArray.push([array['codigo'], array['nome'], array['pre_requisito']]);
+                newArray.push([array['codigo'], array['nome'], array['pre_requisito'], array['nome_prereq']]);
             });
             this.setState({
                 periodo3: newArray
@@ -76,7 +76,7 @@ class CSSGrid extends Component{
             }).then(data => {
             var newArray = this.state.periodo4;
             data.results.map((array) => {
-                newArray.push([array['codigo'], array['nome'], array['pre_requisito']]);
+                newArray.push([array['codigo'], array['nome'], array['pre_requisito'], array['nome_prereq']]);
             });
             this.setState({
                 periodo4: newArray
@@ -128,7 +128,7 @@ class CSSGrid extends Component{
                             changeCorrelacao={this.onChangeCorrelacao.bind(this)}
                             codigo={linha[0]}
                             disciplina={linha[1]}
-                            prerequisito={linha[2]}
+                            prerequisito={linha[3]}
                         />
                     )}
                 </Paper>
@@ -141,7 +141,7 @@ class CSSGrid extends Component{
                             changeCorrelacao={this.onChangeCorrelacao.bind(this)}
                             codigo={linha[0]}
                             disciplina={linha[1]}
-                            prerequisito={linha[2]}
+                            prerequisito={linha[3]}
                         />
                     )}
                 </Paper>
@@ -154,7 +154,7 @@ class CSSGrid extends Component{
                             changeCorrelacao={this.onChangeCorrelacao.bind(this)}
                             codigo={linha[0]}
                             disciplina={linha[1]}
-                            prerequisito={linha[2]}
+                            prerequisito={linha[3]}
                         />
                     )}
                 </Paper>
@@ -167,7 +167,7 @@ class CSSGrid extends Component{
                             changeCorrelacao={this.onChangeCorrelacao.bind(this)}
                             codigo={linha[0]}
                             disciplina={linha[1]}
-                            prerequisito={linha[2]}
+                            prerequisito={linha[3]}
                         />
                     )}
                 </Paper>
@@ -205,6 +205,7 @@ class CSSGrid extends Component{
                 {this.state.plotCorrelacao &&
                 <div className="App-center">
                     <PlotHeatmap disciplinas={this.state.correlacao}
+                                 abreviaturas={this.state.correlacao}
                                  width={620} height={540} title='Correlação'/>
                 </div>}
             </div>

@@ -44,8 +44,6 @@ class PlotHeatmap extends Component {
                 <Plot
                     data={[
                         {type: 'heatmap',
-                            // colorscale: 'YIGnBu',
-                            // autocolorscale: true,
                             colorscale: 'Reds',
                             // vizualização: ordem das linhas de baixo pra cima,
                             x: this.state.abreviaturas,
