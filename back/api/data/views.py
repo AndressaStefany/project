@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_protect
 import os # os.getcwd()
 
 df_todasTurmas = pd.read_csv('data_science/turmas-2010-2017-ok.csv')
-df_comPreRequisitos = pd.read_csv('data_science/disciplinas_prerequisitos.csv')
+df_comPreRequisitos = pd.read_csv('data_science/disciplinas_prerequisitosnome.csv')
 df_turmas2015 = pd.read_csv('data_science/turmas_new.csv')
 
 def dataFrameToJson(dataFrame):
@@ -189,18 +189,22 @@ def coordenadasParalelas(request):
     grafico = grafico[grafico['nome'].isin(lista_disciplinas)]
     df_grafico = pd.crosstab(grafico.discente, grafico.nome, grafico.media_final, aggfunc=np.max).reset_index()
     df_grafico = pd.merge(df_grafico, df_contagem, on='discente', how='left')
-    df_grafico = df_grafico.fillna(0)
+    df_grafico = df_grafico.fillna(0).drop_duplicates()
 
     retorno = []
     blocos = {}
-
+    # np.set_printoptions(threshold=np.nan)
+    # pd.options.display.max_columns  = 999
+    # print(df_grafico)
     for disc in lista_disciplinas:
-        lista = np.array(df_grafico[disc].head()).tolist()
+        lista = np.array(df_grafico[disc]).tolist()
 
         blocos['range'] = [0,10]
         blocos['label'] = disc
         blocos['valor'] = lista
-        retorno.append(blocos)
+        #print(df_grafico[disc].values)
+        retorno.append(blocos.copy())
+
 
     # return JsonResponse({'dimensions':{'range':[0,10], 'label':lista_disciplinas, 'valor':valor}})
     return JsonResponse({'dimensions': retorno})
