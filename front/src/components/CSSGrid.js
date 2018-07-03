@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import OutlinedButtons from './OutlinedButtons';
 import PlotHeatmap from "./PlotHeatmap";
 import Button from '@material-ui/core/Button';
+import PlotParcoords from "./PlotParcoords";
 
 const styles = {
     paper64: {
@@ -15,7 +16,7 @@ const styles = {
         color: 'rgba(0, 0, 0, 0.54)',
     },
     botao: {
-        backgroundColor: '#f50057',
+        backgroundColor: '#666666',
         color: 'white'
     }
 };
@@ -29,7 +30,8 @@ class CSSGrid extends Component{
             periodo3: [],
             periodo4: [],
             correlacao: [],
-            plotCorrelacao: false
+            plotCorrelacao: false,
+            plotParCoord: false
         };
     }
 
@@ -111,15 +113,26 @@ class CSSGrid extends Component{
         });
     }
 
+    changePlotParCoord(){
+        this.setState({
+            plotParCoord:true,
+        });
+    }
+
     cancela(){ // cancela as operações
         this.setState({
             correlacao: [],
-            plotCorrelacao: false
+            plotCorrelacao: false,
+            plotParCoord: false
         });
     }
 
     render(){
-        var content = (<Grid container spacing={24}>
+        var content = (<div><Typography variant="subheading" gutterBottom>
+            <h2>Bacharelado em Ciências e Tecnologia</h2>
+            <br/>
+        </Typography>
+            <Grid container spacing={24}>
             <Grid item xs={3}>
                 <Paper style={styles.paper64}>
                     <p className="App-center">1º período</p>
@@ -172,7 +185,7 @@ class CSSGrid extends Component{
                     )}
                 </Paper>
             </Grid>
-        </Grid>);
+        </Grid></div>);
 
         var buttonCorrelacao = (<Button
             className="App-right"
@@ -182,6 +195,16 @@ class CSSGrid extends Component{
         >
             Correlação
         </Button>);
+
+        var buttonParCoord = (<Button
+            className="App-right"
+            onClick={this.changePlotParCoord.bind(this)}
+            variant="flat"
+            style={styles.botao}
+        >
+            Coordenadas Paralelas
+        </Button>);
+
 
         var buttonCancelar = <Button
             onClick={this.cancela.bind(this)}
@@ -193,14 +216,11 @@ class CSSGrid extends Component{
 
         return (
             <div>
-                <Typography variant="subheading" gutterBottom>
-                    <h2>Bacharelado em Ciências e Tecnologia</h2>
-                    <br/>
-                </Typography>
-                {!(this.state.plotCorrelacao) && content}
-                {!(this.state.plotCorrelacao) && <div className="App-right"><br/>{buttonCorrelacao}</div>}
+                {!(this.state.plotParCoord) && !(this.state.plotCorrelacao) && content}
+                {!(this.state.plotParCoord) && !(this.state.plotCorrelacao) && <div className="App-right"><br/>{buttonCorrelacao}</div>}
+                {!(this.state.plotParCoord) && !(this.state.plotCorrelacao) && <div className="App-right"><br/>{buttonParCoord}</div>}
 
-                {this.state.plotCorrelacao && buttonCancelar}
+                {(this.state.plotCorrelacao || this.state.plotParCoord)&& buttonCancelar}
                 {/*Mostra matriz de correlação*/}
                 {this.state.plotCorrelacao &&
                 <div className="App-center">
@@ -208,6 +228,8 @@ class CSSGrid extends Component{
                                  abreviaturas={this.state.correlacao}
                                  width={620} height={540} title='Correlação'/>
                 </div>}
+
+                {this.state.plotParCoord && <PlotParcoords disciplinas={this.state.correlacao}/>}
             </div>
         );
     }

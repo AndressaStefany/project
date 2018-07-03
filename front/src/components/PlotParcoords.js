@@ -2,46 +2,37 @@ import React, {Component} from 'react'
 import Plot from 'react-plotly.js'
 
 class PlotParcoords extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             range: [0,10],
-            eixos: ['CÁLCULO I', 'CÁLCULO II', 'CÁLCULO III'],
-            //valor: [[3, 5, 3], [8,6,10], [3.5, 10, 8.9]],
-            //range, constraintrange, label, values
+            eixos: props.disciplinas,
             dimensao: [],
             variavel: [],
             data: [],
-            layout: {width: 800, height: 540, title: 'Coordenadas Paralelas', type: 'parcoords'}
+            layout: {width: 900, height: 640, title: 'Coordenadas Paralelas', type: 'parcoords'}
         }
     }
 
     componentDidMount(){
-        //CÁLCULO I,CÁLCULO II,CÁLCULO III
-        //LÓGICA DE PROGRAMAÇÃO,LINGUAGEM DE PROGRAMAÇÃO,COMPUTAÇÃO NUMÉRICA
-        fetch('http://127.0.0.1:8000/api/parCoord/?lista=CÁLCULO I,CÁLCULO II,CÁLCULO III')
+        var lista = (this.state.eixos).toString();
+        console.log(lista);
+        fetch('http://127.0.0.1:8000/api/parCoord/?lista='+lista)
             .then(results => {
                 return results.json();
             }).then(data => {
             data['dimensions'].map((content) => {
-                //console.log(content);
                 var string = '{"range": [0,10], "label": "'+content["label"]+'","values": ['+content['valor']+']}';
-                //var string = '{"range": [0,10], "label": "AAAAA","values": ['+content['valor']+']}';
                 var aux = this.state.data;
                 aux.push(JSON.parse(string));
-                //this.state.variavel= parseFloat(content['valor']);
                 for (var i=0; i < content['valor'].length; i++) {
                     parseFloat(content['valor'][i]);
                     this.state.variavel.push(parseFloat(content['valor'][i]));
                 }
-                //console.log(this.state.data);
-                //console.log(content['valor']);
                 this.setState({
                     data: aux
                 });
             });
-
-            console.log(this.state.variavel);
 
             this.setState({
                 dimensao: data['dimensions'],
@@ -51,7 +42,7 @@ class PlotParcoords extends Component {
 
     render(){
         return(
-            <div>
+            <div className="App-center">
                 <Plot data={[
                     {
                         type: 'parcoords',

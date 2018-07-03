@@ -21,11 +21,10 @@ class MediasView extends Component {
     render(){
         return(
             <div className="App-center">
-                <PlotParcoords/>
-                {/*<PlotViolin discList={this.state.lista[0]} title="1º Período"/>*/}
-                {/*<PlotViolin discList={this.state.lista[1]} title="2º Período"/>*/}
-                {/*<PlotViolin discList={this.state.lista[2]} title="3º Período"/>*/}
-                {/*<PlotViolin discList={this.state.lista[3]} title="4º Período"/>*/}
+                <PlotViolin discList={this.state.lista[0]} title="1º Período"/>
+                <PlotViolin discList={this.state.lista[1]} title="2º Período"/>
+                <PlotViolin discList={this.state.lista[2]} title="3º Período"/>
+                <PlotViolin discList={this.state.lista[3]} title="4º Período"/>
             </div>
         )
     }
