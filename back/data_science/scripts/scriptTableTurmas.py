@@ -79,4 +79,4 @@ df_auxTurmas = df_depois2015[df_depois2015['nome'].isin(disciplinas)]
 colunas_3 = ['descricao', 'discente', 'id_turma', 'media_final', 'codigo',
        'nome', 'ano', 'periodo', 'unidade_responsavel', 'id_curso','periodoano']
 df_auxTurmas = df_auxTurmas[colunas_3]
-df_auxTurmas.to_csv("turmas_2015-2017.csv")
+df_auxTurmas.to_csv("../turmas_2015-2017.csv")
