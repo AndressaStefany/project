@@ -10,16 +10,17 @@ curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/
 curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/4778d3ce-8898-46a8-a623-ee6a480a2980/download/matriculas-de-2016.1.csv > ../matriculas_new/matricula-de-20161.csv
 curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/baa6c8b4-2072-417f-b238-c028ccc8c14b/download/matriculas-de-2015.2.csv > ../matriculas_new/matricula-de-20152.csv
 curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/9e7ba1c2-f92d-4b9c-9e91-3b026ecdf913/download/matriculas-de-2015.1.csv > ../matriculas_new/matricula-de-20151.csv
-curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/e974792c-b557-470c-bf3d-ede7d5b5e6a6/download/matricula-componente-20142.csv > ../matriculas_new/matricula-de-20141.csv
+curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/e974792c-b557-470c-bf3d-ede7d5b5e6a6/download/matricula-componente-20142.csv > ../matriculas_new/matricula-de-20142.csv
 curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/7081446d-39f9-4374-ad0b-86ecab97e569/download/matricula-componente-20141.csv > ../matriculas_new/matricula-de-20141.csv
 curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/517ed5f6-f8a2-40fd-826b-6ed3388f6e88/download/matricula-componente-20132.csv > ../matriculas_new/matricula-de-20132.csv
 curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/674de4cc-1fc0-4314-9f04-a38f0e1f9225/download/matricula-componente-20131.csv > ../matriculas_new/matricula-de-20131.csv
 curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/f2487ebc-e1d7-4fef-ac5d-542636448207/download/matricula-componente-20122.csv > ../matriculas_new/matricula-de-20122.csv
-curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/28d90237-a056-4768-b790-64d7ff6308c2/download/matricula-componente-20121.csv > ../matriculas_new/matricula-de-20112.csv
+curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/28d90237-a056-4768-b790-64d7ff6308c2/download/matricula-componente-20121.csv > ../matriculas_new/matricula-de-20121.csv
+curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/63aca0fb-6bde-4e0b-aa3a-b2d1baa22deb/download/matricula-componente-20112.csv > ../matriculas_new/matricula-de-20112.csv
 curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/919193f3-c3a9-46e5-a186-30486f228385/download/matricula-componente-20111.csv > ../matriculas_new/matricula-de-20111.csv
 curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/34857034-d117-491b-aace-4d389df76051/download/matricula-componente-20102.csv > ../matriculas_new/matricula-de-20102.csv
 curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/d44017d7-8390-45c1-8073-82c0d1f57847/download/matricula-componente-20101.csv > ../matriculas_new/matricula-de-20101.csv
-curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/d44017d7-8390-45c1-8073-82c0d1f57847/download/matricula-componente-20101.csv > ../matriculas_new/matricula-de-20092.csv
+curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/a98d196c-3ee2-487d-951e-4e1be755e84d/download/matricula-componente-20092.csv > ../matriculas_new/matricula-de-20092.csv
 curl http://dados.ufrn.br/dataset/c8650d55-3c5a-4787-a126-d28a4ef902a6/resource/bd578e3c-9fd0-4fc3-af12-07d36990325a/download/matricula-componente-20091.csv > ../matriculas_new/matricula-de-20091.csv
 
 mkdir ../turmas_new
