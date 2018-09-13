@@ -6,7 +6,7 @@ df_matriculas = pd.DataFrame()
 for i in range(10,18):
     for j in range(1,3):
         print('20'+str(i)+str(j))
-        df_matricula = pd.read_csv('../matriculas_new/matricula-componente-20'+str(i)+str(j)+'.csv',sep=';')
+        df_matricula = pd.read_csv('../matriculas_new/matricula-de-20'+str(i)+str(j)+'.csv',sep=';')
         #concatena as tabelas de 2010 a 2017
         df_matriculas = pd.concat([df_matriculas, df_matricula])
         
