@@ -5,7 +5,6 @@ import json
 from django.views.decorators.csrf import csrf_protect
 import os # os.getcwd()
 
-df_todasTurmas = pd.read_csv('data_science/turmas-2010-2017-ok.csv')
 df_comPreRequisitos = pd.read_csv('data_science/disciplinas_prerequisitosnome.csv')
 df_turmas2015 = pd.read_csv('data_science/turmas_new.csv')
 
@@ -14,23 +13,6 @@ def dataFrameToJson(dataFrame):
     dataFrame = json.loads(dataFrame)
 
     return dataFrame
-
-@csrf_protect
-def testeServico(request):
-    limit = int(request.GET.get('limit'))
-    dataFrame = df_todasTurmas.head(limit)
-
-    return JsonResponse(dataFrameToJson(dataFrame),safe=False)
-
-@csrf_protect
-def testeGrafico(request):
-    dataFrame = pd.read_csv('data_science/matriculas_new/matricula-componente-20172.csv',sep=';')
-    dataFrame = dataFrame.dropna()
-    dataFrame = dataFrame[dataFrame['nota']>0]
-    colunas = ['discente', 'nota']
-    dataFrame = dataFrame[colunas].head(10)
-
-    return JsonResponse({'results':dataFrameToJson(dataFrame)})
 
 # Retorna as disciplinas e seus respectivos pre-requisito informando o periodo
 @csrf_protect
